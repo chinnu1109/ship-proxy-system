@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  offshore:
+    build:
+      context: .
+      dockerfile: Dockerfile.offshore
+    ports:
+      - "9999:9999"
+
+  ship:
+    build:
+      context: .
+      dockerfile: Dockerfile.ship
+    depends_on:
+      - offshore
+    environment:
+      - OFFSHORE_HOST=offshore
+      - OFFSHORE_PORT=9999
+    ports:
+      - "8080:8080"
